@@ -205,7 +205,9 @@ gOakSpeech_Text_IStudyPokemon::
     .string "For some people, POKéMON are pets.\n"
     .string "Others use them for battling.\p"
     .string "As for myself…\p"
-    .string "I study POKéMON as a profession.\p$"
+    .string "I study POKéMON as a profession.\p"
+    .string "Once your POKéDEX is ready,\n"
+    .string "far-off POKéMON will appear.\p$"
 
 gOakSpeech_Text_TellMeALittleAboutYourself::
     .string "But first, tell me a little about\n"
