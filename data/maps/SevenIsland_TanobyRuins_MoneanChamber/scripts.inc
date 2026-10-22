@@ -1,8 +1,17 @@
 SevenIsland_TanobyRuins_MoneanChamber_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SevenIsland_TanobyRuins_MoneanChamber_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SevenIsland_TanobyRuins_MoneanChamber_OnResume
 	.byte 0
 
 SevenIsland_TanobyRuins_MoneanChamber_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_SEVEN_ISLAND_TANOBY_RUINS_MONEAN_CHAMBER
 	call EventScript_TryDarkenRuins
+	show_static_if_natdex FLAG_HIDE_STATIC_REGIROCK, FLAG_FOUGHT_REGIROCK
 	end
+
+SevenIsland_TanobyRuins_MoneanChamber_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+SevenIsland_TanobyRuins_MoneanChamber_EventScript_Regirock::
+	static_legendary SPECIES_REGIROCK, 40, FLAG_FOUGHT_REGIROCK

@@ -25,6 +25,7 @@ OneIsland_PokemonCenter_1F_EventScript_SetNetworkMachineOn::
 	return
 
 OneIsland_PokemonCenter_1F_OnTransition::
+	clearflag FLAG_CELIO_GAVE_STARTER_THIS_VISIT
 	setrespawn HEAL_LOCATION_ONE_ISLAND
 	call_if_eq VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 6, OneIsland_PokemonCenter_1F_EventScript_SetCelioQuestDone
 	call_if_eq VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 0, OneIsland_PokemonCenter_1F_EventScript_SetBillCelioFirstMeetingPos
@@ -198,7 +199,7 @@ OneIsland_PokemonCenter_1F_EventScript_BillGoTakeStroll::
 OneIsland_PokemonCenter_1F_EventScript_Celio::
 	lock
 	faceplayer
-	goto_if_eq VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 7, OneIsland_PokemonCenter_1F_EventScript_CelioGiveBillFact
+	goto_if_eq VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 7, OneIsland_PokemonCenter_1F_EventScript_CelioStarterOrFact
 	goto_if_eq VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 6, OneIsland_PokemonCenter_1F_EventScript_CelioJustGivenSapphire
 	goto_if_set FLAG_RECOVERED_SAPPHIRE, OneIsland_PokemonCenter_1F_EventScript_GiveCelioSapphire
 	goto_if_eq VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 5, OneIsland_PokemonCenter_1F_EventScript_ExplainRainbowPass
@@ -561,3 +562,57 @@ OneIsland_PokemonCenter_1F_Movement_BillExit::
 	walk_left
 	walk_down
 	step_end
+
+OneIsland_PokemonCenter_1F_EventScript_CelioStarterOrFact::
+	goto_if_set FLAG_CELIO_GAVE_STARTER_THIS_VISIT, OneIsland_PokemonCenter_1F_EventScript_CelioGiveBillFact
+	compare VAR_JOHTO_HOENN_STARTER_GIFT, 6
+	goto_if_ge OneIsland_PokemonCenter_1F_EventScript_CelioGiveBillFact
+	msgbox OneIsland_PokemonCenter_1F_Text_CelioHasStarter, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, OneIsland_PokemonCenter_1F_EventScript_CelioGiveBillFact
+	switch VAR_JOHTO_HOENN_STARTER_GIFT
+	case 0, OneIsland_PokemonCenter_1F_EventScript_GiveChikorita
+	case 1, OneIsland_PokemonCenter_1F_EventScript_GiveCyndaquil
+	case 2, OneIsland_PokemonCenter_1F_EventScript_GiveTotodile
+	case 3, OneIsland_PokemonCenter_1F_EventScript_GiveTreecko
+	case 4, OneIsland_PokemonCenter_1F_EventScript_GiveTorchic
+	case 5, OneIsland_PokemonCenter_1F_EventScript_GiveMudkip
+	goto OneIsland_PokemonCenter_1F_EventScript_CelioGiveBillFact
+
+OneIsland_PokemonCenter_1F_EventScript_GiveChikorita::
+	setvar VAR_TEMP_1, SPECIES_CHIKORITA
+	givemon SPECIES_CHIKORITA, 5
+	goto OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift
+
+OneIsland_PokemonCenter_1F_EventScript_GiveCyndaquil::
+	setvar VAR_TEMP_1, SPECIES_CYNDAQUIL
+	givemon SPECIES_CYNDAQUIL, 5
+	goto OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift
+
+OneIsland_PokemonCenter_1F_EventScript_GiveTotodile::
+	setvar VAR_TEMP_1, SPECIES_TOTODILE
+	givemon SPECIES_TOTODILE, 5
+	goto OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift
+
+OneIsland_PokemonCenter_1F_EventScript_GiveTreecko::
+	setvar VAR_TEMP_1, SPECIES_TREECKO
+	givemon SPECIES_TREECKO, 5
+	goto OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift
+
+OneIsland_PokemonCenter_1F_EventScript_GiveTorchic::
+	setvar VAR_TEMP_1, SPECIES_TORCHIC
+	givemon SPECIES_TORCHIC, 5
+	goto OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift
+
+OneIsland_PokemonCenter_1F_EventScript_GiveMudkip::
+	setvar VAR_TEMP_1, SPECIES_MUDKIP
+	givemon SPECIES_MUDKIP, 5
+	goto OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift
+
+OneIsland_PokemonCenter_1F_EventScript_FinishStarterGift::
+	goto_if_eq VAR_RESULT, 2, EventScript_NoMoreRoomForPokemon
+	bufferspeciesname STR_VAR_1, VAR_TEMP_1
+	addvar VAR_JOHTO_HOENN_STARTER_GIFT, 1
+	setflag FLAG_CELIO_GAVE_STARTER_THIS_VISIT
+	call EventScript_NicknameGiftMon
+	release
+	end

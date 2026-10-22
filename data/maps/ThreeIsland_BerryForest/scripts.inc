@@ -1,11 +1,20 @@
 ThreeIsland_BerryForest_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ThreeIsland_BerryForest_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, ThreeIsland_BerryForest_OnResume
 	.byte 0
 
 ThreeIsland_BerryForest_OnTransition::
 	setworldmapflag FLAG_WORLD_MAP_THREE_ISLAND_BERRY_FOREST
 	setescapewarp MAP_THREE_ISLAND_BOND_BRIDGE, 12, 6
+	show_static_if_natdex FLAG_HIDE_STATIC_CELEBI, FLAG_FOUGHT_CELEBI
 	end
+
+ThreeIsland_BerryForest_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+ThreeIsland_BerryForest_EventScript_Celebi::
+	static_legendary SPECIES_CELEBI, 30, FLAG_FOUGHT_CELEBI
 
 ThreeIsland_BerryForest_EventScript_Lostelle::
 	lock

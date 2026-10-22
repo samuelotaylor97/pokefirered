@@ -91,3 +91,13 @@ FiveIsland_ResortGorgeous_Text_SelphyThanksYouMayGoNow::
 FiveIsland_ResortGorgeous_Text_SelphysHouse::
     .string "SELPHY'S HOUSE$"
 
+FiveIsland_ResortGorgeous_Text_GroomOffer::
+    .string "I can bring out a POKéMON's beauty.\n"
+    .string "Want me to groom one?$"
+
+FiveIsland_ResortGorgeous_Text_GroomDone::
+    .string "There! Simply radiant.$"
+
+FiveIsland_ResortGorgeous_Text_GroomEgg::
+    .string "I can't groom an EGG.$"
+

@@ -4,6 +4,8 @@
 #include "field_specials.h"
 #include "constants/maps.h"
 #include "constants/region_map_sections.h"
+#include "constants/vars.h"
+#include "event_data.h"
 
 // Despite having a variable to track it, the roamer is
 // hard-coded to only ever be in map group 3
@@ -79,30 +81,51 @@ void ClearRoamerData(void)
     }
 }
 
-#define GetRoamerSpecies() ({\
-    u16 a;\
-    switch (GetStarterSpecies())\
-    {\
-    default:\
-        a = SPECIES_RAIKOU;\
-        break;\
-    case SPECIES_BULBASAUR:\
-        a = SPECIES_ENTEI;\
-        break;\
-    case SPECIES_CHARMANDER:\
-        a = SPECIES_SUICUNE;\
-        break;\
-    }\
-    a;\
-})
+// Beasts come one at a time, then Latias, then Latios. The save has one roamer slot.
+// The first beast is the vanilla starter pairing; the other two follow in dex order.
+static u16 GetRoamerSpeciesForIndex(u16 index)
+{
+    u16 first;
+    u16 rest[2];
+    u8 n = 0;
+
+    switch (GetStarterSpecies())
+    {
+    case SPECIES_BULBASAUR:
+        first = SPECIES_ENTEI;
+        break;
+    case SPECIES_CHARMANDER:
+        first = SPECIES_SUICUNE;
+        break;
+    default:
+        first = SPECIES_RAIKOU;
+        break;
+    }
+
+    if (index == 0)
+        return first;
+    if (index == 3)
+        return SPECIES_LATIAS;
+    if (index >= 4)
+        return SPECIES_LATIOS;
+
+    if (first != SPECIES_RAIKOU)
+        rest[n++] = SPECIES_RAIKOU;
+    if (first != SPECIES_ENTEI)
+        rest[n++] = SPECIES_ENTEI;
+    if (first != SPECIES_SUICUNE)
+        rest[n++] = SPECIES_SUICUNE;
+    return rest[index - 1];
+}
 
 void CreateInitialRoamerMon(void)
 {
     struct Pokemon * mon = &gEnemyParty[0];
-    u16 species = GetRoamerSpecies();
-    CreateMon(mon, species, 50, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    u16 species = GetRoamerSpeciesForIndex(VarGet(VAR_ROAMER_INDEX));
+    u8 level = (species == SPECIES_LATIAS || species == SPECIES_LATIOS) ? 40 : 50;
+    CreateMon(mon, species, level, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
     ROAMER->species = species;
-    ROAMER->level = 50;
+    ROAMER->level = level;
     ROAMER->status = 0;
     ROAMER->active = TRUE;
     ROAMER->ivs = GetMonData(mon, MON_DATA_IVS);
@@ -247,7 +270,15 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
 
 void SetRoamerInactive(void)
 {
+    u16 index = VarGet(VAR_ROAMER_INDEX);
+
     ROAMER->active = FALSE;
+    // Caught or defeated. The next legend starts roaming immediately.
+    if (index < 4)
+    {
+        VarSet(VAR_ROAMER_INDEX, index + 1);
+        CreateInitialRoamerMon();
+    }
 }
 
 void GetRoamerLocation(u8 *mapGroup, u8 *mapNum)

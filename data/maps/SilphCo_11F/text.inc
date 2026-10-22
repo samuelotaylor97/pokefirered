@@ -92,3 +92,9 @@ SilphCo_11F_Text_FloorSign::
     .string "SILPH CO. HEAD OFFICE\n"
     .string "11F$"
 
+SilphCo_11F_Text_PresidentOffersBeldum::
+    .string "PRESIDENT: Our research turned up\n"
+    .string "a most unusual POKéMON.\p"
+    .string "It's still young.\n"
+    .string "Will you raise it?$"
+

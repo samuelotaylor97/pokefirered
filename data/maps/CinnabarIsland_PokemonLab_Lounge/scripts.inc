@@ -2,7 +2,24 @@ CinnabarIsland_PokemonLab_Lounge_MapScripts::
 	.byte 0
 
 CinnabarIsland_PokemonLab_Lounge_EventScript_Scientist::
-	msgbox CinnabarIsland_PokemonLab_Lounge_Text_FoundFossilInMtMoon, MSGBOX_NPC
+	lock
+	faceplayer
+	specialvar VAR_RESULT, IsNationalPokedexEnabled
+	goto_if_eq VAR_RESULT, FALSE, CinnabarIsland_PokemonLab_Lounge_EventScript_ScientistFossil
+	goto_if_set FLAG_GOT_CASTFORM, CinnabarIsland_PokemonLab_Lounge_EventScript_ScientistFossil
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_OfferCastform, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CinnabarIsland_PokemonLab_Lounge_EventScript_ScientistFossil
+	givemon SPECIES_CASTFORM, 25
+	goto_if_eq VAR_RESULT, 2, EventScript_NoMoreRoomForPokemon
+	bufferspeciesname STR_VAR_1, SPECIES_CASTFORM
+	setflag FLAG_GOT_CASTFORM
+	call EventScript_NicknameGiftMon
+	release
+	end
+
+CinnabarIsland_PokemonLab_Lounge_EventScript_ScientistFossil::
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_FoundFossilInMtMoon
+	release
 	end
 
 CinnabarIsland_PokemonLab_Lounge_EventScript_Clifton::

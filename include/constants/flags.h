@@ -1072,8 +1072,8 @@
 #define FLAG_HIDDEN_ITEM_UNUSED_0x28                                       (FLAG_HIDDEN_ITEMS_START +  40)
 #define FLAG_HIDDEN_ITEM_ROUTE11_ESCAPE_ROPE                               (FLAG_HIDDEN_ITEMS_START +  41)
 #define FLAG_HIDDEN_ITEM_ROUTE12_HYPER_POTION                              (FLAG_HIDDEN_ITEMS_START +  42)
-#define FLAG_HIDDEN_ITEM_UNUSED_0x2B                                       (FLAG_HIDDEN_ITEMS_START +  43)
-#define FLAG_HIDDEN_ITEM_UNUSED_0x2C                                       (FLAG_HIDDEN_ITEMS_START +  44)
+#define FLAG_HIDDEN_ITEM_SEVAULT_CANYON_ROOT_FOSSIL                        (FLAG_HIDDEN_ITEMS_START +  43)
+#define FLAG_HIDDEN_ITEM_SEVAULT_CANYON_CLAW_FOSSIL                        (FLAG_HIDDEN_ITEMS_START +  44)
 #define FLAG_HIDDEN_ITEM_UNUSED_0x2D                                       (FLAG_HIDDEN_ITEMS_START +  45)
 #define FLAG_HIDDEN_ITEM_UNUSED_0x2E                                       (FLAG_HIDDEN_ITEMS_START +  46)
 #define FLAG_HIDDEN_ITEM_CELADON_CITY_PP_UP                                (FLAG_HIDDEN_ITEMS_START +  47)
@@ -1221,16 +1221,16 @@
 #define FLAG_HIDDEN_ITEM_VIRIDIAN_CITY_GYM_MACHO_BRACE                     (FLAG_HIDDEN_ITEMS_START + 189)
 #define FLAG_HIDDEN_ITEM_SSANNE_EXTERIOR_LAVA_COOKIE                       (FLAG_HIDDEN_ITEMS_START + 190)
 
-// Unused hidden item flags
-#define FLAG_UNUSED_0x4A7               0x4A7 // Unused Flag
-#define FLAG_UNUSED_0x4A8               0x4A8 // Unused Flag
-#define FLAG_UNUSED_0x4A9               0x4A9 // Unused Flag
-#define FLAG_UNUSED_0x4AA               0x4AA // Unused Flag
-#define FLAG_UNUSED_0x4AB               0x4AB // Unused Flag
-#define FLAG_UNUSED_0x4AC               0x4AC // Unused Flag
-#define FLAG_UNUSED_0x4AD               0x4AD // Unused Flag
-#define FLAG_UNUSED_0x4AE               0x4AE // Unused Flag
-#define FLAG_UNUSED_0x4AF               0x4AF // Unused Flag
+// One-time static encounters added for the National Dex.
+#define FLAG_HIDE_STATIC_MEW            0x4A7
+#define FLAG_FOUGHT_MEW                 0x4A8
+#define FLAG_HIDE_STATIC_CELEBI         0x4A9
+#define FLAG_FOUGHT_CELEBI              0x4AA
+#define FLAG_HIDE_STATIC_JIRACHI        0x4AB
+#define FLAG_FOUGHT_JIRACHI             0x4AC
+#define FLAG_HIDE_STATIC_REGIROCK       0x4AD
+#define FLAG_FOUGHT_REGIROCK            0x4AE
+#define FLAG_HIDE_STATIC_REGICE         0x4AF
 
 // Boss clear flags, 1200
 #define FLAG_DEFEATED_BROCK           0x4B0
@@ -1247,24 +1247,23 @@
 #define FLAG_DEFEATED_LANCE           0x4BB
 #define FLAG_DEFEATED_CHAMP           0x4BC
 
-// Unused?
-#define FLAG_0x4BD               0x4BD
-#define FLAG_0x4BE               0x4BE
-#define FLAG_0x4BF               0x4BF
-#define FLAG_0x4C0               0x4C0
-#define FLAG_0x4C1               0x4C1
-#define FLAG_0x4C2               0x4C2
-#define FLAG_0x4C3               0x4C3
-#define FLAG_0x4C4               0x4C4
-#define FLAG_0x4C5               0x4C5
-#define FLAG_0x4C6               0x4C6
-#define FLAG_0x4C7               0x4C7
-#define FLAG_0x4C8               0x4C8
-#define FLAG_0x4C9               0x4C9
-#define FLAG_0x4CA               0x4CA
-#define FLAG_0x4CB               0x4CB
-#define FLAG_0x4CC               0x4CC
-#define FLAG_0x4CD               0x4CD
+#define FLAG_FOUGHT_REGICE                       0x4BD
+#define FLAG_HIDE_STATIC_REGISTEEL               0x4BE
+#define FLAG_FOUGHT_REGISTEEL                    0x4BF
+#define FLAG_HIDE_STATIC_KYOGRE                  0x4C0
+#define FLAG_FOUGHT_KYOGRE                       0x4C1
+#define FLAG_HIDE_STATIC_GROUDON                 0x4C2
+#define FLAG_FOUGHT_GROUDON                      0x4C3
+#define FLAG_HIDE_STATIC_RAYQUAZA                0x4C4
+#define FLAG_FOUGHT_RAYQUAZA                     0x4C5
+#define FLAG_HIDE_SUDOWOODO                      0x4C6
+#define FLAG_FOUGHT_SUDOWOODO                    0x4C7
+#define FLAG_GOT_BELDUM                          0x4C8
+#define FLAG_GOT_CASTFORM                        0x4C9
+#define FLAG_REVIVED_ROOT_FOSSIL                 0x4CA
+#define FLAG_REVIVED_CLAW_FOSSIL                 0x4CB
+#define FLAG_CELIO_GAVE_STARTER_THIS_VISIT       0x4CC
+#define FLAG_OAK_AIDE_GAVE_STARTER_THIS_VISIT    0x4CD
 #define FLAG_0x4CE               0x4CE
 #define FLAG_0x4CF               0x4CF
 #define FLAG_0x4D0               0x4D0

@@ -355,3 +355,9 @@ OneIsland_PokemonCenter_1F_Text_MachineLinkedWithKantoAndHoenn::
 OneIsland_PokemonCenter_1F_Text_ObtainedTriPass::
     .string "Obtained the TRI-PASS!$"
 
+OneIsland_PokemonCenter_1F_Text_CelioHasStarter::
+    .string "CELIO: The network picked up some\n"
+    .string "POKéMON from distant regions.\p"
+    .string "I can spare one each time you visit.\n"
+    .string "Would you like one?$"
+
