@@ -237,11 +237,10 @@ $(SSANNEGFXDIR)/smoke.4bpp: %.4bpp: %.png
 $(ITEMPCGFXDIR)/bg.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 82 -Wnum_tiles
 
-# Legends of Kanto lineup shares BG1 (4bpp, palette 13). Vanilla Charizard
-# fit in 135 tiles; the four legendaries need 250, still inside the 512-tile
-# charbase before BG2.
+# Legends of Kanto busts share BG1 (4bpp). Warm birds use palette 13 and
+# Articuno/Mewtwo use palette 5. 60 tiles, inside the 512-tile charbase.
 $(TITLESCREENGFXDIR)/firered/box_art_mon.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 250 -Wnum_tiles
+	$(GFX) $< $@ -num_tiles 60 -Wnum_tiles
 
 $(TITLESCREENGFXDIR)/leafgreen/box_art_mon.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 123 -Wnum_tiles
