@@ -198,6 +198,20 @@ static u16 GetCurrentMapWildMonHeaderId(void)
 
             if (!UnlockedTanobyOrAreNotInTanoby())
                 break;
+
+            // A National Dex variant header, when one exists, is stored
+            // immediately after the vanilla header for the same map.
+            // Altering Cave uses that same-map run for its own sets.
+            if (IsNationalPokedexEnabled()
+                && !(gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SIX_ISLAND_ALTERING_CAVE)
+                     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SIX_ISLAND_ALTERING_CAVE)))
+            {
+                const struct WildPokemonHeader *nextHeader = &gWildMonHeaders[i + 1];
+
+                if (nextHeader->mapGroup == gWildMonHeaders[i].mapGroup
+                    && nextHeader->mapNum == gWildMonHeaders[i].mapNum)
+                    i++;
+            }
             return i;
         }
     }
