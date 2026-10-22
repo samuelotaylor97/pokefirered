@@ -35,6 +35,20 @@ SilphCo_11F_EventScript_NoRoomForMasterBall::
 	end
 
 SilphCo_11F_EventScript_AlreadyGotMasterBall::
+	specialvar VAR_RESULT, IsNationalPokedexEnabled
+	goto_if_eq VAR_RESULT, FALSE, SilphCo_11F_EventScript_PresidentPrototype
+	goto_if_set FLAG_GOT_BELDUM, SilphCo_11F_EventScript_PresidentPrototype
+	msgbox SilphCo_11F_Text_PresidentOffersBeldum, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SilphCo_11F_EventScript_PresidentPrototype
+	givemon SPECIES_BELDUM, 5
+	goto_if_eq VAR_RESULT, 2, EventScript_NoMoreRoomForPokemon
+	bufferspeciesname STR_VAR_1, SPECIES_BELDUM
+	setflag FLAG_GOT_BELDUM
+	call EventScript_NicknameGiftMon
+	release
+	end
+
+SilphCo_11F_EventScript_PresidentPrototype::
 	msgbox SilphCo_11F_Text_ThatsOurSecretPrototype
 	release
 	end

@@ -88,8 +88,10 @@
 // Which roamer is active: 0-2 the Johto beasts (starter picks the first),
 // 3 Latias, 4 Latios. Advanced when the current roamer is caught or defeated.
 #define VAR_ROAMER_INDEX                   0x4029
-#define VAR_0x402A                         0x402A
-#define VAR_0x402B                         0x402B
+// How many of Celio's six Johto/Hoenn starters have been given.
+#define VAR_JOHTO_HOENN_STARTER_GIFT       0x402A
+// How many of Oak's aide's two unpicked Kanto starters have been given.
+#define VAR_KANTO_STARTER_GIFT             0x402B
 #define VAR_0x402C                         0x402C
 #define VAR_0x402D                         0x402D
 #define VAR_0x402E                         0x402E

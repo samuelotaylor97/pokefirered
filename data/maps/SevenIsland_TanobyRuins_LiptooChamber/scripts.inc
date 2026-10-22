@@ -1,7 +1,16 @@
 SevenIsland_TanobyRuins_LiptooChamber_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SevenIsland_TanobyRuins_LiptooChamber_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SevenIsland_TanobyRuins_LiptooChamber_OnResume
 	.byte 0
 
 SevenIsland_TanobyRuins_LiptooChamber_OnTransition::
 	call EventScript_TryDarkenRuins
+	show_static_if_natdex FLAG_HIDE_STATIC_REGICE, FLAG_FOUGHT_REGICE
 	end
+
+SevenIsland_TanobyRuins_LiptooChamber_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+SevenIsland_TanobyRuins_LiptooChamber_EventScript_Regice::
+	static_legendary SPECIES_REGICE, 40, FLAG_FOUGHT_REGICE

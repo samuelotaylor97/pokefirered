@@ -327,6 +327,26 @@
   "bg_events": [
     {
       "type": "hidden_item",
+      "x": 14,
+      "y": 64,
+      "elevation": 3,
+      "item": "ITEM_ROOT_FOSSIL",
+      "flag": "FLAG_HIDDEN_ITEM_SEVAULT_CANYON_ROOT_FOSSIL",
+      "quantity": 1,
+      "underfoot": true
+    },
+    {
+      "type": "hidden_item",
+      "x": 16,
+      "y": 65,
+      "elevation": 3,
+      "item": "ITEM_CLAW_FOSSIL",
+      "flag": "FLAG_HIDDEN_ITEM_SEVAULT_CANYON_CLAW_FOSSIL",
+      "quantity": 1,
+      "underfoot": true
+    },
+    {
+      "type": "hidden_item",
       "x": 15,
       "y": 66,
       "elevation": 3,

@@ -346,6 +346,12 @@ PalletTown_ProfessorOaksLab_Text_OakMustReallyWorkToFillPokedex::
     .string "Truly, this is a monumentally great\n"
     .string "undertaking in POKéMON history!$"
 
+PalletTown_ProfessorOaksLab_Text_AideHasStarter::
+    .string "PROF. OAK asked me to pass along a\n"
+    .string "POKéMON he didn't give you before.\p"
+    .string "I can spare one each visit.\n"
+    .string "Would you like it?$"
+
 PalletTown_ProfessorOaksLab_Text_RivalIllCompleteThePokedex::
     .string "{RIVAL}: Gramps, calm down.\n"
     .string "Don't get so excited.\p"

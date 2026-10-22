@@ -13,6 +13,7 @@ PalletTown_ProfessorOaksLab_MapScripts::
 
 PalletTown_ProfessorOaksLab_OnTransition::
 	setflag FLAG_VISITED_OAKS_LAB
+	clearflag FLAG_OAK_AIDE_GAVE_STARTER_THIS_VISIT
 	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 1, PalletTown_ProfessorOaksLab_EventScript_ReadyOakForStarterScene
 	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 7, PalletTown_ProfessorOaksLab_EventScript_ReadyOakForNationalDexScene
 	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 8, PalletTown_ProfessorOaksLab_EventScript_SetNationalDexSceneFinished
@@ -1249,8 +1250,54 @@ PalletTown_ProfessorOaksLab_EventScript_Aide1::
 	end
 
 PalletTown_ProfessorOaksLab_EventScript_Aide1GameClear::
+	goto_if_set FLAG_OAK_AIDE_GAVE_STARTER_THIS_VISIT, PalletTown_ProfessorOaksLab_EventScript_Aide1RadioShow
+	compare VAR_KANTO_STARTER_GIFT, 2
+	goto_if_ge PalletTown_ProfessorOaksLab_EventScript_Aide1RadioShow
+	msgbox PalletTown_ProfessorOaksLab_Text_AideHasStarter, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, PalletTown_ProfessorOaksLab_EventScript_Aide1RadioShow
+	compare VAR_KANTO_STARTER_GIFT, 0
+	goto_if_eq PalletTown_ProfessorOaksLab_EventScript_AideFirstStarter
+	goto PalletTown_ProfessorOaksLab_EventScript_AideSecondStarter
+
+PalletTown_ProfessorOaksLab_EventScript_Aide1RadioShow::
 	famechecker FAMECHECKER_OAK, 5
 	msgbox PalletTown_ProfessorOaksLab_Text_OakIsGoingToHaveRadioShow
+	release
+	end
+
+PalletTown_ProfessorOaksLab_EventScript_AideFirstStarter::
+	switch VAR_STARTER_MON
+	case 0, PalletTown_ProfessorOaksLab_EventScript_GiveCharmander
+	case 1, PalletTown_ProfessorOaksLab_EventScript_GiveBulbasaur
+	goto PalletTown_ProfessorOaksLab_EventScript_GiveBulbasaur
+
+PalletTown_ProfessorOaksLab_EventScript_AideSecondStarter::
+	switch VAR_STARTER_MON
+	case 0, PalletTown_ProfessorOaksLab_EventScript_GiveSquirtle
+	case 1, PalletTown_ProfessorOaksLab_EventScript_GiveCharmander
+	goto PalletTown_ProfessorOaksLab_EventScript_GiveSquirtle
+
+PalletTown_ProfessorOaksLab_EventScript_GiveBulbasaur::
+	setvar VAR_TEMP_1, SPECIES_BULBASAUR
+	givemon SPECIES_BULBASAUR, 5
+	goto PalletTown_ProfessorOaksLab_EventScript_FinishStarterGift
+
+PalletTown_ProfessorOaksLab_EventScript_GiveCharmander::
+	setvar VAR_TEMP_1, SPECIES_CHARMANDER
+	givemon SPECIES_CHARMANDER, 5
+	goto PalletTown_ProfessorOaksLab_EventScript_FinishStarterGift
+
+PalletTown_ProfessorOaksLab_EventScript_GiveSquirtle::
+	setvar VAR_TEMP_1, SPECIES_SQUIRTLE
+	givemon SPECIES_SQUIRTLE, 5
+	goto PalletTown_ProfessorOaksLab_EventScript_FinishStarterGift
+
+PalletTown_ProfessorOaksLab_EventScript_FinishStarterGift::
+	goto_if_eq VAR_RESULT, 2, EventScript_NoMoreRoomForPokemon
+	bufferspeciesname STR_VAR_1, VAR_TEMP_1
+	addvar VAR_KANTO_STARTER_GIFT, 1
+	setflag FLAG_OAK_AIDE_GAVE_STARTER_THIS_VISIT
+	call EventScript_NicknameGiftMon
 	release
 	end
 

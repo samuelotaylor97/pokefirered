@@ -1856,3 +1856,46 @@
 	setvar VAR_0x8006, \item
 	special CreateEnemyEventMon
 	.endm
+
+	@ Shows a static Pokémon only after the National Dex is enabled, until it is caught or defeated.
+	@ VAR_0x8004 is the hide flag. VAR_0x8005 is the fought flag.
+	.macro show_static_if_natdex hideFlag:req, foughtFlag:req
+	setvar VAR_0x8004, \hideFlag
+	setvar VAR_0x8005, \foughtFlag
+	call EventScript_ShowStaticIfNatDex
+	.endm
+
+	@ One-time static legendary. Species, level, and the fought flag are immediates so a battle cannot clobber them.
+	.macro static_legendary species:req, level:req, foughtFlag:req
+	goto_if_questlog EventScript_ReleaseEnd
+	special QuestLog_CutRecording
+	lock
+	faceplayer
+	bufferspeciesname STR_VAR_1, \species
+	waitse
+	playmoncry \species, CRY_MODE_ENCOUNTER
+	message Text_StaticLegendAppeared
+	waitmessage
+	waitmoncry
+	delay 20
+	playbgm MUS_ENCOUNTER_GYM_LEADER, 0
+	waitbuttonpress
+	setwildbattle \species, \level
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	special StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, _StaticLegendDefeated_\@
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, _StaticLegendFled_\@
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, _StaticLegendFled_\@
+	setflag \foughtFlag
+	release
+	end
+_StaticLegendDefeated_\@:
+	setflag \foughtFlag
+	goto EventScript_RemoveStaticMon
+_StaticLegendFled_\@:
+	setvar VAR_0x8004, \species
+	goto EventScript_MonFlewAway
+	.endm

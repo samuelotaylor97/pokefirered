@@ -1,10 +1,23 @@
 PokemonMansion_B1F_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, PokemonMansion_B1F_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, PokemonMansion_B1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, PokemonMansion_B1F_OnResume
 	.byte 0
 
 PokemonMansion_B1F_OnLoad::
 	call_if_set FLAG_POKEMON_MANSION_SWITCH_STATE, PokemonMansion_EventScript_PressSwitch_B1F
 	end
+
+PokemonMansion_B1F_OnTransition::
+	show_static_if_natdex FLAG_HIDE_STATIC_MEW, FLAG_FOUGHT_MEW
+	end
+
+PokemonMansion_B1F_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+PokemonMansion_B1F_EventScript_Mew::
+	static_legendary SPECIES_MEW, 30, FLAG_FOUGHT_MEW
 
 PokemonMansion_B1F_EventScript_Statue::
 	lockall

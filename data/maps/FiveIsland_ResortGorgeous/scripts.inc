@@ -42,3 +42,28 @@ FiveIsland_ResortGorgeous_Movement_SelphyEnterHome::
 FiveIsland_ResortGorgeous_EventScript_SelphysHouseSign::
 	msgbox FiveIsland_ResortGorgeous_Text_SelphysHouse, MSGBOX_SIGN
 	end
+
+FiveIsland_ResortGorgeous_EventScript_Groomer::
+	lock
+	faceplayer
+	msgbox FiveIsland_ResortGorgeous_Text_GroomOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, FiveIsland_ResortGorgeous_EventScript_GroomerEnd
+	special ChoosePartyMon
+	waitstate
+	copyvar VAR_RESULT, VAR_0x8004
+	goto_if_ge VAR_RESULT, PARTY_SIZE, FiveIsland_ResortGorgeous_EventScript_GroomerEnd
+	special IsSelectedMonEgg
+	goto_if_eq VAR_RESULT, TRUE, FiveIsland_ResortGorgeous_EventScript_GroomerEgg
+	special SetChosenMonBeautyToMax
+	msgbox FiveIsland_ResortGorgeous_Text_GroomDone
+	release
+	end
+
+FiveIsland_ResortGorgeous_EventScript_GroomerEgg::
+	msgbox FiveIsland_ResortGorgeous_Text_GroomEgg
+	release
+	end
+
+FiveIsland_ResortGorgeous_EventScript_GroomerEnd::
+	release
+	end

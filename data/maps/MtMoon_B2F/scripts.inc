@@ -1,10 +1,36 @@
 MtMoon_B2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MtMoon_B2F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, MtMoon_B2F_OnResume
 	.byte 0
 
 MtMoon_B2F_OnTransition::
 	call_if_unset FLAG_GOT_FOSSIL_FROM_MT_MOON, MtMoon_B2F_EventScript_ShowFossils
+	show_static_if_natdex FLAG_HIDE_STATIC_JIRACHI, FLAG_FOUGHT_JIRACHI
+	specialvar VAR_RESULT, IsNationalPokedexEnabled
+	call_if_eq VAR_RESULT, TRUE, MtMoon_B2F_EventScript_ShowMissingFossil
 	end
+
+MtMoon_B2F_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+MtMoon_B2F_EventScript_Jirachi::
+	static_legendary SPECIES_JIRACHI, 5, FLAG_FOUGHT_JIRACHI
+
+@ The fossil Miguel took comes back after the National Dex. Picking it up only gives the item.
+MtMoon_B2F_EventScript_ShowMissingFossil::
+	goto_if_unset FLAG_GOT_FOSSIL_FROM_MT_MOON, EventScript_Return
+	goto_if_unset FLAG_GOT_HELIX_FOSSIL, MtMoon_B2F_EventScript_ShowHelixAgain
+	goto_if_unset FLAG_GOT_DOME_FOSSIL, MtMoon_B2F_EventScript_ShowDomeAgain
+	return
+
+MtMoon_B2F_EventScript_ShowHelixAgain::
+	clearflag FLAG_HIDE_HELIX_FOSSIL
+	return
+
+MtMoon_B2F_EventScript_ShowDomeAgain::
+	clearflag FLAG_HIDE_DOME_FOSSIL
+	return
 
 MtMoon_B2F_EventScript_ShowFossils::
 	clearflag FLAG_HIDE_DOME_FOSSIL
@@ -51,6 +77,7 @@ MtMoon_B2F_EventScript_MiguelGoPickFossil::
 	end
 
 MtMoon_B2F_EventScript_DomeFossil::
+	goto_if_set FLAG_GOT_FOSSIL_FROM_MT_MOON, MtMoon_B2F_EventScript_TakeSecondDome
 	lock
 	faceplayer
 	msgbox MtMoon_B2F_Text_YouWantDomeFossil, MSGBOX_YESNO
@@ -82,6 +109,7 @@ MtMoon_B2F_Movement_MiguelToHelixFossil::
 	step_end
 
 MtMoon_B2F_EventScript_HelixFossil::
+	goto_if_set FLAG_GOT_FOSSIL_FROM_MT_MOON, MtMoon_B2F_EventScript_TakeSecondHelix
 	lock
 	faceplayer
 	msgbox MtMoon_B2F_Text_YouWantHelixFossil, MSGBOX_YESNO
@@ -106,6 +134,32 @@ MtMoon_B2F_EventScript_HelixFossil::
 	end
 
 MtMoon_B2F_EventScript_DontTakeFossil::
+	release
+	end
+
+MtMoon_B2F_EventScript_TakeSecondDome::
+	lock
+	faceplayer
+	msgbox MtMoon_B2F_Text_YouWantDomeFossil, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MtMoon_B2F_EventScript_DontTakeFossil
+	checkitemspace ITEM_DOME_FOSSIL, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_BagIsFull
+	removeobject LOCALID_DOME_FOSSIL
+	giveitem_msg MtMoon_B2F_Text_ObtainedDomeFossil, ITEM_DOME_FOSSIL, 1, MUS_OBTAIN_KEY_ITEM
+	setflag FLAG_GOT_DOME_FOSSIL
+	release
+	end
+
+MtMoon_B2F_EventScript_TakeSecondHelix::
+	lock
+	faceplayer
+	msgbox MtMoon_B2F_Text_YouWantHelixFossil, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MtMoon_B2F_EventScript_DontTakeFossil
+	checkitemspace ITEM_HELIX_FOSSIL, 1
+	goto_if_eq VAR_RESULT, FALSE, EventScript_BagIsFull
+	removeobject LOCALID_HELIX_FOSSIL
+	giveitem_msg MtMoon_B2F_Text_ObtainedHelixFossil, ITEM_HELIX_FOSSIL, 1, MUS_OBTAIN_KEY_ITEM
+	setflag FLAG_GOT_HELIX_FOSSIL
 	release
 	end
 

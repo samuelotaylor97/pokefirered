@@ -1,5 +1,19 @@
 SixIsland_DottedHole_SapphireRoom_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SixIsland_DottedHole_SapphireRoom_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SixIsland_DottedHole_SapphireRoom_OnResume
 	.byte 0
+
+SixIsland_DottedHole_SapphireRoom_OnTransition::
+	show_static_if_natdex FLAG_HIDE_STATIC_KYOGRE, FLAG_FOUGHT_KYOGRE
+	end
+
+SixIsland_DottedHole_SapphireRoom_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+@ Overworld sprite is Lapras. The battle is Kyogre.
+SixIsland_DottedHole_SapphireRoom_EventScript_Kyogre::
+	static_legendary SPECIES_KYOGRE, 45, FLAG_FOUGHT_KYOGRE
 
 SixIsland_DottedHole_SapphireRoom_EventScript_Sapphire::
 	lock

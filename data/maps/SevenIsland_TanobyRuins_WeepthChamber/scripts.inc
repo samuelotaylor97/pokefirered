@@ -1,7 +1,16 @@
 SevenIsland_TanobyRuins_WeepthChamber_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SevenIsland_TanobyRuins_WeepthChamber_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SevenIsland_TanobyRuins_WeepthChamber_OnResume
 	.byte 0
 
 SevenIsland_TanobyRuins_WeepthChamber_OnTransition::
 	call EventScript_TryDarkenRuins
+	show_static_if_natdex FLAG_HIDE_STATIC_REGISTEEL, FLAG_FOUGHT_REGISTEEL
 	end
+
+SevenIsland_TanobyRuins_WeepthChamber_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, EventScript_StaticLegendaryTryRemove
+	end
+
+SevenIsland_TanobyRuins_WeepthChamber_EventScript_Registeel::
+	static_legendary SPECIES_REGISTEEL, 40, FLAG_FOUGHT_REGISTEEL
