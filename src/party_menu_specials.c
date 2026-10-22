@@ -106,3 +106,18 @@ void IsSelectedMonEgg(void)
     else
         gSpecialVar_Result = FALSE;
 }
+
+// Raises one party Pokémon's Beauty to the maximum so Feebas can evolve.
+// gSpecialVar_0x8004 is the party slot chosen by ChoosePartyMon.
+void SetChosenMonBeautyToMax(void)
+{
+    u8 beauty = 255;
+
+    if (gSpecialVar_0x8004 >= PARTY_SIZE)
+        return;
+    if (!GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SANITY_HAS_SPECIES))
+        return;
+    if (GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_IS_EGG))
+        return;
+    SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_BEAUTY, &beauty);
+}

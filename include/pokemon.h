@@ -268,6 +268,7 @@ struct Evolution
     u16 method;
     u16 param;
     u16 targetSpecies;
+    u16 param2; // EVO_LEVEL_ITEM: required held item. Unused otherwise.
 };
 
 #define NUM_UNOWN_FORMS 28
