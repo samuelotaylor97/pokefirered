@@ -1,0 +1,4 @@
+{
+  "name": "pokefirered",
+  "install": "bash .cursor/install.sh"
+}
